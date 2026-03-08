@@ -230,9 +230,73 @@ function calculate() {
     warningEl.style.display = 'none';
   }
 
+  // 保存最终日期供日历功能使用
+  window._lastValidDate = lastValidDate;
+
   const resultCard = document.getElementById('resultCard');
   resultCard.classList.add('show');
   setTimeout(() => {
     resultCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 50);
+}
+
+// 获取提醒日期（最终日期 - 提前天数）
+function getReminderDate() {
+  if (!window._lastValidDate) return null;
+  const days = parseInt(document.getElementById('reminderDays').value) || 7;
+  return addDays(window._lastValidDate, -days);
+}
+
+// 格式化为 YYYYMMDD（Google Calendar 用）
+function toGCalDate(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}${m}${d}`;
+}
+
+function addToGoogleCalendar() {
+  const reminderDate = getReminderDate();
+  if (!reminderDate) return;
+
+  const title = encodeURIComponent(t('calendarEventTitle'));
+  const desc = encodeURIComponent(t('calendarEventDesc'));
+  const dateStr = toGCalDate(reminderDate);
+  const nextDay = toGCalDate(addDays(reminderDate, 1));
+
+  const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${desc}&dates=${dateStr}/${nextDay}`;
+  window.open(url, '_blank');
+}
+
+function addToAppleCalendar() {
+  const reminderDate = getReminderDate();
+  if (!reminderDate) return;
+
+  const title = t('calendarEventTitle');
+  const desc = t('calendarEventDesc');
+  const dateStr = toGCalDate(reminderDate);
+
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'BEGIN:VEVENT',
+    `DTSTART;VALUE=DATE:${dateStr}`,
+    `DTEND;VALUE=DATE:${toGCalDate(addDays(reminderDate, 1))}`,
+    `SUMMARY:${title}`,
+    `DESCRIPTION:${desc}`,
+    'BEGIN:VALARM',
+    'TRIGGER:-PT0M',
+    'ACTION:DISPLAY',
+    `DESCRIPTION:${title}`,
+    'END:VALARM',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'visa-reminder.ics';
+  link.click();
+  URL.revokeObjectURL(link.href);
 }

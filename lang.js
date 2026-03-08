@@ -42,6 +42,11 @@ const TRANSLATIONS = {
     windowTotal: '18 个月窗口内总天数',
     windowRemaining: '18 个月窗口内剩余天数',
     warningFewDays: '可停留天数较少，请注意安排行程。',
+    reminderLabel: '添加离境提醒到日历',
+    remindBefore: '提前',
+    daysBefore: '天提醒',
+    calendarEventTitle: '澳大利亚签证 - 最晚离境日',
+    calendarEventDesc: '根据 Condition 8558 规则计算，您本次入境最晚需在此日期前离开澳大利亚。',
   },
 
   'zh-TW': {
@@ -79,6 +84,11 @@ const TRANSLATIONS = {
     windowTotal: '18 個月窗口內總天數',
     windowRemaining: '18 個月窗口內剩餘天數',
     warningFewDays: '可停留天數較少，請注意安排行程。',
+    reminderLabel: '新增離境提醒至日曆',
+    remindBefore: '提前',
+    daysBefore: '天提醒',
+    calendarEventTitle: '澳洲簽證 - 最晚離境日',
+    calendarEventDesc: '根據 Condition 8558 規則計算，您本次入境最晚需在此日期前離開澳洲。',
   },
 
   ja: {
@@ -116,6 +126,11 @@ const TRANSLATIONS = {
     windowTotal: '18ヶ月期間内の合計日数',
     windowRemaining: '18ヶ月期間内の残り日数',
     warningFewDays: '滞在可能日数が残りわずかです。旅程の計画にご注意ください。',
+    reminderLabel: 'カレンダーに出国リマインダーを追加',
+    remindBefore: '',
+    daysBefore: '日前にリマインド',
+    calendarEventTitle: 'オーストラリアビザ - 最終出国日',
+    calendarEventDesc: 'Condition 8558 の規則に基づき、この入国での最終出国日です。',
   },
 
   hi: {
@@ -146,6 +161,11 @@ const TRANSLATIONS = {
     windowTotal: '18 महीने की विंडो में कुल दिन',
     windowRemaining: '18 महीने की विंडो में शेष दिन',
     warningFewDays: 'ठहरने के दिन बहुत कम बचे हैं। कृपया अपनी यात्रा की योजना बनाएं।',
+    reminderLabel: 'कैलेंडर में प्रस्थान अनुस्मारक जोड़ें',
+    remindBefore: '',
+    daysBefore: 'दिन पहले याद दिलाएं',
+    calendarEventTitle: 'ऑस्ट्रेलिया वीज़ा - अंतिम प्रस्थान तिथि',
+    calendarEventDesc: 'Condition 8558 नियम के अनुसार, इस प्रवेश के लिए आपको इस तिथि तक ऑस्ट्रेलिया छोड़ना होगा।',
   },
 
   id: {
@@ -176,6 +196,11 @@ const TRANSLATIONS = {
     windowTotal: 'Total dalam jendela 18 bulan',
     windowRemaining: 'Sisa dalam jendela 18 bulan',
     warningFewDays: 'Sisa hari tinggal sangat sedikit. Harap rencanakan perjalanan Anda.',
+    reminderLabel: 'Tambahkan pengingat keberangkatan ke kalender',
+    remindBefore: '',
+    daysBefore: 'hari sebelumnya',
+    calendarEventTitle: 'Visa Australia - Tanggal keberangkatan terakhir',
+    calendarEventDesc: 'Berdasarkan aturan Condition 8558, Anda harus meninggalkan Australia sebelum tanggal ini untuk kedatangan ini.',
   },
 
   vi: {
@@ -206,6 +231,11 @@ const TRANSLATIONS = {
     windowTotal: 'Tổng trong cửa sổ 18 tháng',
     windowRemaining: 'Còn lại trong cửa sổ 18 tháng',
     warningFewDays: 'Số ngày lưu trú còn lại rất ít. Vui lòng lên kế hoạch chuyến đi.',
+    reminderLabel: 'Thêm nhắc nhở xuất cảnh vào lịch',
+    remindBefore: 'Trước',
+    daysBefore: 'ngày',
+    calendarEventTitle: 'Visa Úc - Ngày xuất cảnh cuối cùng',
+    calendarEventDesc: 'Theo quy tắc Condition 8558, bạn cần rời khỏi Úc trước ngày này cho lần nhập cảnh này.',
   },
 
   fil: {
@@ -236,6 +266,11 @@ const TRANSLATIONS = {
     windowTotal: 'Kabuuan sa 18 buwang window',
     windowRemaining: 'Natitira sa 18 buwang window',
     warningFewDays: 'Napakakaunting araw na lang ang natitira. Pakiplano ang iyong biyahe.',
+    reminderLabel: 'Magdagdag ng paalala sa pag-alis sa kalendaryo',
+    remindBefore: '',
+    daysBefore: 'araw bago mag-remind',
+    calendarEventTitle: 'Visa ng Australia - Huling araw ng pag-alis',
+    calendarEventDesc: 'Batay sa panuntunang Condition 8558, kailangan mong umalis sa Australia bago ang petsang ito para sa pagpasok na ito.',
   },
 
   th: {
@@ -266,6 +301,11 @@ const TRANSLATIONS = {
     windowTotal: 'รวมในหน้าต่าง 18 เดือน',
     windowRemaining: 'เหลือในหน้าต่าง 18 เดือน',
     warningFewDays: 'จำนวนวันที่เหลือน้อยมาก กรุณาวางแผนการเดินทาง',
+    reminderLabel: 'เพิ่มการแจ้งเตือนการเดินทางออกในปฏิทิน',
+    remindBefore: 'ก่อน',
+    daysBefore: 'วัน',
+    calendarEventTitle: 'วีซ่าออสเตรเลีย - วันสุดท้ายที่ต้องออกจากประเทศ',
+    calendarEventDesc: 'ตามกฎ Condition 8558 คุณต้องออกจากออสเตรเลียก่อนวันนี้สำหรับการเข้าประเทศครั้งนี้',
   },
 
   ko: {
@@ -296,6 +336,11 @@ const TRANSLATIONS = {
     windowTotal: '18개월 윈도우 내 총 일수',
     windowRemaining: '18개월 윈도우 내 잔여 일수',
     warningFewDays: '체류 가능 일수가 매우 적습니다. 여행 계획에 유의하세요.',
+    reminderLabel: '캘린더에 출국 알림 추가',
+    remindBefore: '',
+    daysBefore: '일 전에 알림',
+    calendarEventTitle: '호주 비자 - 최종 출국일',
+    calendarEventDesc: 'Condition 8558 규칙에 따라, 이번 입국에서 이 날짜까지 호주를 떠나야 합니다.',
   },
 
   en: {
@@ -333,6 +378,11 @@ const TRANSLATIONS = {
     windowTotal: 'Total in 18-month window',
     windowRemaining: 'Remaining in 18-month window',
     warningFewDays: 'Very few days remaining. Please plan your trip accordingly.',
+    reminderLabel: 'Add departure reminder to calendar',
+    remindBefore: 'Remind me',
+    daysBefore: 'days before',
+    calendarEventTitle: 'Australia Visa - Last day to depart',
+    calendarEventDesc: 'Based on Condition 8558, you must leave Australia by this date for this entry.',
   }
 };
 
