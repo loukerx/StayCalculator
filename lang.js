@@ -113,8 +113,8 @@ const TRANSLATIONS = {
     constraintText: '18ヶ月間で最大12ヶ月の滞在規則による制限',
     historicalDays: '過去の滞在日数合計',
     thisStayDays: '今回の滞在可能日数',
-    windowTotal: '18ヶ月窓口内の合計日数',
-    windowRemaining: '18ヶ月窓口内の残り日数',
+    windowTotal: '18ヶ月期間内の合計日数',
+    windowRemaining: '18ヶ月期間内の残り日数',
     warningFewDays: '滞在可能日数が残りわずかです。旅程の計画にご注意ください。',
   },
 
@@ -209,7 +209,7 @@ const TRANSLATIONS = {
   },
 
   fil: {
-    pageTitle: 'Australia Visa Stay Calculator',
+    pageTitle: 'Kalkulator ng Pananatili sa Visa ng Australia',
     subtitle: 'Kalkulahin ang pinakamahuli na petsa na maaari kang manatili para sa pagpasok na ito',
     ruleTitle: 'Condition 8558',
     ruleText: 'Ang mga may hawak ng visa sa Australia ay hindi dapat manatili sa Australia nang higit sa 12 buwan (365 araw) sa anumang tuloy-tuloy na 18 buwang panahon. Kinakalkula ito gamit ang sliding window — mula sa anumang araw, kung titingnan ang 18 buwan pabalik, ang kabuuang araw na nasa Australia ay hindi dapat lumampas sa 365 araw.',
