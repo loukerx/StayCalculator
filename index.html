@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>澳大利亚签证停留时间计算器</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f5f7fa;
+      color: #2c3e50;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 8px;
+      color: #1a1a2e;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #7f8c8d;
+      font-size: 14px;
+      margin-bottom: 36px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a2e;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eef0f2;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .form-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 13px;
+      color: #7f8c8d;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    input[type="date"] {
+      padding: 10px 12px;
+      border: 1px solid #dce1e8;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #2c3e50;
+      background: #fafbfc;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    input[type="date"]:focus {
+      outline: none;
+      border-color: #3498db;
+      background: #fff;
+    }
+
+    .trip-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .trip-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: #fafbfc;
+      border-radius: 8px;
+      border: 1px solid #eef0f2;
+    }
+
+    .trip-item .form-group {
+      margin-bottom: 0;
+    }
+
+    .trip-number {
+      font-size: 13px;
+      font-weight: 600;
+      color: #b0b8c4;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    .trip-days {
+      font-size: 12px;
+      color: #95a5a6;
+      min-width: 50px;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 4px;
+      transition: color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-remove:hover {
+      color: #e74c3c;
+    }
+
+    .btn-add {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: none;
+      border: 1px dashed #d0d7de;
+      border-radius: 8px;
+      color: #7f8c8d;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-add:hover {
+      border-color: #3498db;
+      color: #3498db;
+      background: #f0f7ff;
+    }
+
+    .btn-calculate {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: #2c3e50;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 8px;
+    }
+
+    .btn-calculate:hover {
+      background: #1a252f;
+    }
+
+    /* ===== 结果区域 - 醒目样式 ===== */
+    .result-card {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border-radius: 16px;
+      padding: 32px 24px;
+      margin-top: 24px;
+      box-shadow: 0 8px 32px rgba(26, 26, 46, 0.25);
+      display: none;
+      text-align: center;
+    }
+
+    .result-card.show {
+      display: block;
+      animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-label {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .result-date-main {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .result-date-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 24px;
+    }
+
+    .result-constraint {
+      display: inline-block;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+    }
+
+    .result-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      margin: 20px 0;
+    }
+
+    .result-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .detail-item {
+      padding: 12px 8px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+    }
+
+    .detail-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .detail-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .result-warning {
+      margin-top: 16px;
+      padding: 10px 14px;
+      background: rgba(231, 76, 60, 0.15);
+      border: 1px solid rgba(231, 76, 60, 0.3);
+      border-radius: 8px;
+      font-size: 13px;
+      color: #e8a0a0;
+    }
+
+    .error-msg {
+      background: #fff5f5;
+      color: #c0392b;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-top: 20px;
+      display: none;
+      text-align: center;
+    }
+
+    .error-msg.show {
+      display: block;
+      animation: slideUp 0.3s ease;
+    }
+
+    @media (max-width: 480px) {
+      .form-row { flex-direction: column; gap: 10px; }
+      .trip-item { flex-direction: column; align-items: stretch; }
+      .trip-item .form-row { flex-direction: row; }
+      .trip-number { text-align: left; }
+      .trip-days { text-align: left; }
+      .btn-remove { align-self: flex-end; margin-top: -4px; }
+      .result-date-main { font-size: 28px; }
+      .result-details { grid-template-columns: 1fr 1fr; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>澳大利亚签证停留计算器</h1>
+    <p class="subtitle">计算本次入境最晚可停留至哪一天</p>
+
+    <!-- 签证信息 -->
+    <div class="card">
+      <div class="card-title">签证信息</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>签证批准日期</label>
+          <input type="date" id="visaGrantDate">
+        </div>
+        <div class="form-group">
+          <label>签证最晚入境日期</label>
+          <input type="date" id="visaLastArrivalDate">
+        </div>
+      </div>
+    </div>
+
+    <!-- 出入境记录 -->
+    <div class="card">
+      <div class="card-title">历史出入境记录</div>
+      <div class="trip-list" id="tripList"></div>
+      <button class="btn-add" onclick="addTrip()">+ 添加一条记录</button>
+    </div>
+
+    <!-- 本次入境 -->
+    <div class="card">
+      <div class="card-title">本次入境</div>
+      <div class="form-group">
+        <label>入境日期</label>
+        <input type="date" id="currentEntryDate">
+      </div>
+    </div>
+
+    <!-- 计算按钮 -->
+    <button class="btn-calculate" onclick="calculate()">展示结果</button>
+
+    <!-- 错误提示 -->
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- 结果展示 -->
+    <div class="result-card" id="resultCard">
+      <div class="result-label">本次最晚可停留至</div>
+      <div class="result-date-main" id="resultDateMain"></div>
+      <div class="result-date-sub" id="resultDateSub"></div>
+      <div class="result-constraint" id="resultConstraint"></div>
+      <div class="result-divider"></div>
+      <div class="result-details" id="resultDetails"></div>
+      <div class="result-warning" id="resultWarning" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
