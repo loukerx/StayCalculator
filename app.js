@@ -9,16 +9,16 @@ function addTrip() {
     <span class="trip-number">${tripList.children.length + 1}</span>
     <div class="form-row" style="flex:1; margin-bottom:0;">
       <div class="form-group">
-        <label>入境日期</label>
+        <label>${t('entryDate')}</label>
         <input type="date" class="trip-entry" onchange="updateTripDays(this)">
       </div>
       <div class="form-group">
-        <label>离境日期</label>
+        <label>${t('exitDate')}</label>
         <input type="date" class="trip-exit" onchange="updateTripDays(this)">
       </div>
     </div>
     <span class="trip-days"></span>
-    <button class="btn-remove" onclick="removeTrip(this)" title="删除">&times;</button>
+    <button class="btn-remove" onclick="removeTrip(this)" title="${t('deleteTrip')}">&times;</button>
   `;
   tripList.appendChild(item);
 }
@@ -37,7 +37,7 @@ function updateTripDays(input) {
   const daysSpan = item.querySelector('.trip-days');
   if (entry && exit) {
     const days = daysBetween(parseLocalDate(entry), parseLocalDate(exit));
-    daysSpan.textContent = days > 0 ? days + ' 天' : '';
+    daysSpan.textContent = days > 0 ? days + ' ' + t('days') : '';
   } else {
     daysSpan.textContent = '';
   }
@@ -128,26 +128,18 @@ function calculate() {
   errorEl.classList.remove('show');
   document.getElementById('resultCard').classList.remove('show');
 
-  const grantStr = document.getElementById('visaGrantDate').value;
   const lastArrivalStr = document.getElementById('visaLastArrivalDate').value;
   const currentEntryStr = document.getElementById('currentEntryDate').value;
 
-  if (!grantStr || !lastArrivalStr || !currentEntryStr) {
-    return showError('请填写所有签证信息和本次入境日期。');
+  if (!lastArrivalStr || !currentEntryStr) {
+    return showError(t('errorFillAll'));
   }
 
-  const grantDate = parseLocalDate(grantStr);
   const lastArrivalDate = parseLocalDate(lastArrivalStr);
   const currentEntry = parseLocalDate(currentEntryStr);
 
-  if (lastArrivalDate <= grantDate) {
-    return showError('签证最晚入境日期必须晚于签证批准日期。');
-  }
-  if (currentEntry < grantDate) {
-    return showError('本次入境日期不能早于签证批准日期。');
-  }
   if (currentEntry > lastArrivalDate) {
-    return showError('本次入境日期已超过签证最晚入境日期（Must not arrive after）。');
+    return showError(t('errorArrivalExceeded'));
   }
 
   // 解析历史行程
@@ -158,12 +150,12 @@ function calculate() {
     const entryVal = item.querySelector('.trip-entry').value;
     const exitVal = item.querySelector('.trip-exit').value;
     if (!entryVal || !exitVal) {
-      return showError('请完整填写每条出入境记录的入境和离境日期。');
+      return showError(t('errorFillTrip'));
     }
     const entry = parseLocalDate(entryVal);
     const exit = parseLocalDate(exitVal);
     if (exit <= entry) {
-      return showError('出入境记录中离境日期必须晚于入境日期。');
+      return showError(t('errorExitBeforeEntry'));
     }
     const days = daysBetween(entry, exit);
     totalHistoricalDays += days;
@@ -172,18 +164,8 @@ function calculate() {
 
   trips.sort((a, b) => a.entry - b.entry);
 
-  /**
-   * 核心计算：逐日模拟
-   *
-   * 签证最晚入境日期（Must not arrive after）仅限制能否入境，
-   * 入境后的停留时长完全由 "18 个月内最多停留 12 个月" 规则决定。
-   *
-   * 逐日向后检查，直到 18 个月窗口内总天数超过 365 天。
-   * 设置一个合理的上限（入境日 + 548 天，即 18 个月）防止无限循环，
-   * 因为单次连续停留不可能超过 18 个月而不违规。
-   */
   const MAX_STAY_DAYS = 365;
-  const MAX_SEARCH_DAYS = 548; // 18 个月约 548 天，作为搜索上限
+  const MAX_SEARCH_DAYS = 548;
   let lastValidDate = null;
   let limitedByRule = false;
 
@@ -203,51 +185,46 @@ function calculate() {
     d = addDays(d, 1);
   }
 
-  // 如果在搜索范围内没有超限，最晚可待到搜索上限
   if (!limitedByRule) {
     lastValidDate = searchEnd;
   }
 
-  // 如果最终日期早于入境日，说明已经没有可用天数
   if (lastValidDate < currentEntry) {
-    return showError('根据 18 个月内最多停留 12 个月的规则，本次入境已无法停留。');
+    return showError(t('errorNoStay'));
   }
 
-  // 计算本次可停留天数
   const thisStayDays = daysBetween(currentEntry, lastValidDate) + 1;
 
-  // 计算最终日期对应的 18 个月窗口内总天数
   const finalWindowStart = subtractMonths(lastValidDate, 18);
   const totalUsedInWindow = countDaysInWindow(finalWindowStart, lastValidDate, trips, currentEntry, lastValidDate);
 
   // 展示结果
   document.getElementById('resultDateMain').textContent = formatDateCN(lastValidDate);
   document.getElementById('resultDateSub').textContent = formatDateEN(lastValidDate);
-  document.getElementById('resultConstraint').textContent = '受 18 个月内最多停留 12 个月规则限制';
+  document.getElementById('resultConstraint').textContent = t('constraintText');
 
   document.getElementById('resultDetails').innerHTML = `
     <div class="detail-item">
       <div class="detail-value">${totalHistoricalDays}</div>
-      <div class="detail-label">历史停留总天数</div>
+      <div class="detail-label">${t('historicalDays')}</div>
     </div>
     <div class="detail-item">
       <div class="detail-value">${thisStayDays}</div>
-      <div class="detail-label">本次可停留天数</div>
+      <div class="detail-label">${t('thisStayDays')}</div>
     </div>
     <div class="detail-item">
       <div class="detail-value">${totalUsedInWindow}</div>
-      <div class="detail-label">18 个月窗口内总天数</div>
+      <div class="detail-label">${t('windowTotal')}</div>
     </div>
     <div class="detail-item">
       <div class="detail-value">${MAX_STAY_DAYS - totalUsedInWindow + thisStayDays}</div>
-      <div class="detail-label">18 个月窗口内剩余天数</div>
+      <div class="detail-label">${t('windowRemaining')}</div>
     </div>
   `;
 
-  // 警告
   const warningEl = document.getElementById('resultWarning');
   if (thisStayDays <= 14) {
-    warningEl.textContent = '可停留天数较少，请注意安排行程。';
+    warningEl.textContent = t('warningFewDays');
     warningEl.style.display = 'block';
   } else {
     warningEl.style.display = 'none';

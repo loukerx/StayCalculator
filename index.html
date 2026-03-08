@@ -19,6 +19,28 @@
       max-width: 640px;
       margin: 0 auto;
       padding: 40px 20px 60px;
+      position: relative;
+    }
+
+    .lang-switcher {
+      position: absolute;
+      top: 40px;
+      right: 20px;
+    }
+
+    .lang-switcher select {
+      padding: 6px 12px;
+      border: 1px solid #dce1e8;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 13px;
+      color: #2c3e50;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .lang-switcher select:hover {
+      border-color: #3498db;
     }
 
     h1 {
@@ -34,6 +56,24 @@
       color: #7f8c8d;
       font-size: 14px;
       margin-bottom: 36px;
+    }
+
+    .rule-note {
+      background: #eef3fb;
+      border-left: 3px solid #3498db;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      font-size: 13px;
+      color: #4a6a8a;
+      line-height: 1.7;
+    }
+
+    .rule-note-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 6px;
     }
 
     .card {
@@ -308,49 +348,63 @@
 </head>
 <body>
   <div class="container">
-    <h1>澳大利亚签证停留计算器</h1>
-    <p class="subtitle">计算本次入境最晚可停留至哪一天</p>
+    <div class="lang-switcher">
+      <select id="langSelect" onchange="setLang(this.value)">
+        <option value="zh">中文</option>
+        <option value="zh-TW">繁體中文</option>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="hi">हिन्दी</option>
+        <option value="id">Bahasa Indonesia</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="fil">Filipino</option>
+        <option value="th">ภาษาไทย</option>
+      </select>
+    </div>
+
+    <h1 data-i18n="pageTitle">澳大利亚签证停留计算器</h1>
+    <p class="subtitle" data-i18n="subtitle">计算本次入境最晚可停留至哪一天</p>
+
+    <div class="rule-note">
+      <div class="rule-note-title" data-i18n="ruleTitle">Condition 8558</div>
+      <p data-i18n="ruleText">澳大利亚签证持有者在任意连续 18 个月内，累计在澳停留时间不得超过 12 个月（365 天）。该规则采用滚动窗口计算，即从任一天往回推 18 个月，这段时间内的总停留天数都不能超过 365 天。</p>
+    </div>
 
     <!-- 签证信息 -->
     <div class="card">
-      <div class="card-title">签证信息</div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>签证批准日期</label>
-          <input type="date" id="visaGrantDate">
-        </div>
-        <div class="form-group">
-          <label>签证最晚入境日期</label>
-          <input type="date" id="visaLastArrivalDate">
-        </div>
+      <div class="card-title" data-i18n="visaInfo">签证信息</div>
+      <div class="form-group">
+        <label data-i18n="lastArrivalLabel">签证最晚入境日期（Must not arrive after）</label>
+        <input type="date" id="visaLastArrivalDate">
       </div>
     </div>
 
     <!-- 出入境记录 -->
     <div class="card">
-      <div class="card-title">历史出入境记录</div>
+      <div class="card-title" data-i18n="tripHistory">历史出入境记录</div>
       <div class="trip-list" id="tripList"></div>
-      <button class="btn-add" onclick="addTrip()">+ 添加一条记录</button>
+      <button class="btn-add" onclick="addTrip()" data-i18n="addTrip">+ 添加一条记录</button>
     </div>
 
     <!-- 本次入境 -->
     <div class="card">
-      <div class="card-title">本次入境</div>
+      <div class="card-title" data-i18n="currentEntry">本次入境</div>
       <div class="form-group">
-        <label>入境日期</label>
+        <label data-i18n="currentEntryLabel">入境日期</label>
         <input type="date" id="currentEntryDate">
       </div>
     </div>
 
     <!-- 计算按钮 -->
-    <button class="btn-calculate" onclick="calculate()">展示结果</button>
+    <button class="btn-calculate" onclick="calculate()" data-i18n="showResult">展示结果</button>
 
     <!-- 错误提示 -->
     <div class="error-msg" id="errorMsg"></div>
 
     <!-- 结果展示 -->
     <div class="result-card" id="resultCard">
-      <div class="result-label">本次最晚可停留至</div>
+      <div class="result-label" data-i18n="resultLabel">本次最晚可停留至</div>
       <div class="result-date-main" id="resultDateMain"></div>
       <div class="result-date-sub" id="resultDateSub"></div>
       <div class="result-constraint" id="resultConstraint"></div>
@@ -360,6 +414,11 @@
     </div>
   </div>
 
+  <script src="lang.js"></script>
   <script src="app.js"></script>
+  <script>
+    // 页面加载时应用保存的语言设置
+    setLang(currentLang);
+  </script>
 </body>
 </html>
