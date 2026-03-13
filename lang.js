@@ -49,6 +49,7 @@ const TRANSLATIONS = {
     calendarEventDesc: '根据 Condition 8558 规则计算，您本次入境最晚需在此日期前离开澳大利亚。',
     fullYearLabel: '最早可住满一年的入境日期',
     fullYearNote: '从该日入境，可连续停留 365 天不违反 Condition 8558 规则',
+    fullYearVisaExpired: '⚠️ 该日期已超过签证最晚入境日期，需续签或申请新签证后方可入境',
   },
 
   'zh-TW': {
@@ -93,6 +94,7 @@ const TRANSLATIONS = {
     calendarEventDesc: '根據 Condition 8558 規則計算，您本次入境最晚需在此日期前離開澳洲。',
     fullYearLabel: '最早可住滿一年的入境日期',
     fullYearNote: '從該日入境，可連續停留 365 天不違反 Condition 8558 規則',
+    fullYearVisaExpired: '⚠️ 該日期已超過簽證最晚入境日期，需續簽或申請新簽證後方可入境',
   },
 
   ja: {
@@ -137,6 +139,7 @@ const TRANSLATIONS = {
     calendarEventDesc: 'Condition 8558 の規則に基づき、この入国での最終出国日です。',
     fullYearLabel: '最短で丸1年滞在可能な入国日',
     fullYearNote: 'この日から入国すれば、365日間連続滞在してもCondition 8558に違反しません',
+    fullYearVisaExpired: '⚠️ この日付はビザの最終入国日を過ぎています。入国にはビザの更新または新規申請が必要です',
   },
 
   hi: {
@@ -174,6 +177,7 @@ const TRANSLATIONS = {
     calendarEventDesc: 'Condition 8558 नियम के अनुसार, इस प्रवेश के लिए आपको इस तिथि तक ऑस्ट्रेलिया छोड़ना होगा।',
     fullYearLabel: 'पूरे एक साल रहने के लिए सबसे पहली प्रवेश तिथि',
     fullYearNote: 'इस तिथि से प्रवेश करने पर Condition 8558 का उल्लंघन किए बिना 365 दिन लगातार रह सकते हैं',
+    fullYearVisaExpired: '⚠️ यह तिथि वीज़ा की अंतिम प्रवेश तिथि से आगे है, प्रवेश के लिए वीज़ा नवीनीकरण या नया आवेदन आवश्यक है',
   },
 
   id: {
@@ -211,6 +215,7 @@ const TRANSLATIONS = {
     calendarEventDesc: 'Berdasarkan aturan Condition 8558, Anda harus meninggalkan Australia sebelum tanggal ini untuk kedatangan ini.',
     fullYearLabel: 'Tanggal masuk paling awal untuk tinggal penuh 1 tahun',
     fullYearNote: 'Masuk dari tanggal ini memungkinkan tinggal 365 hari berturut-turut tanpa melanggar Condition 8558',
+    fullYearVisaExpired: '⚠️ Tanggal ini melewati batas kedatangan terakhir visa, perlu perpanjangan atau visa baru untuk masuk',
   },
 
   vi: {
@@ -248,6 +253,7 @@ const TRANSLATIONS = {
     calendarEventDesc: 'Theo quy tắc Condition 8558, bạn cần rời khỏi Úc trước ngày này cho lần nhập cảnh này.',
     fullYearLabel: 'Ngày nhập cảnh sớm nhất để ở đủ 1 năm',
     fullYearNote: 'Nhập cảnh từ ngày này có thể ở liên tục 365 ngày mà không vi phạm Condition 8558',
+    fullYearVisaExpired: '⚠️ Ngày này đã vượt quá ngày nhập cảnh cuối cùng của visa, cần gia hạn hoặc xin visa mới để nhập cảnh',
   },
 
   fil: {
@@ -285,6 +291,7 @@ const TRANSLATIONS = {
     calendarEventDesc: 'Batay sa panuntunang Condition 8558, kailangan mong umalis sa Australia bago ang petsang ito para sa pagpasok na ito.',
     fullYearLabel: 'Pinakamaagang petsa ng pagpasok para manatili ng buong 1 taon',
     fullYearNote: 'Mula sa petsang ito, maaaring manatili nang 365 araw nang tuloy-tuloy nang hindi lumalabag sa Condition 8558',
+    fullYearVisaExpired: '⚠️ Ang petsang ito ay lampas na sa huling araw ng pagdating ng visa, kailangan ng renewal o bagong visa para makapasok',
   },
 
   th: {
@@ -322,6 +329,7 @@ const TRANSLATIONS = {
     calendarEventDesc: 'ตามกฎ Condition 8558 คุณต้องออกจากออสเตรเลียก่อนวันนี้สำหรับการเข้าประเทศครั้งนี้',
     fullYearLabel: 'วันเข้าประเทศที่เร็วที่สุดเพื่อพำนักครบ 1 ปี',
     fullYearNote: 'เข้าประเทศตั้งแต่วันนี้สามารถพำนักต่อเนื่อง 365 วันโดยไม่ละเมิด Condition 8558',
+    fullYearVisaExpired: '⚠️ วันที่นี้เกินวันเข้าประเทศครั้งสุดท้ายของวีซ่าแล้ว ต้องต่ออายุหรือสมัครวีซ่าใหม่เพื่อเข้าประเทศ',
   },
 
   ko: {
@@ -359,6 +367,7 @@ const TRANSLATIONS = {
     calendarEventDesc: 'Condition 8558 규칙에 따라, 이번 입국에서 이 날짜까지 호주를 떠나야 합니다.',
     fullYearLabel: '만 1년 체류 가능한 최초 입국일',
     fullYearNote: '이 날짜부터 입국하면 Condition 8558을 위반하지 않고 365일 연속 체류 가능',
+    fullYearVisaExpired: '⚠️ 이 날짜는 비자 최종 입국일을 초과했습니다. 입국하려면 비자 갱신 또는 새 비자 신청이 필요합니다',
   },
 
   en: {
@@ -403,6 +412,7 @@ const TRANSLATIONS = {
     calendarEventDesc: 'Based on Condition 8558, you must leave Australia by this date for this entry.',
     fullYearLabel: 'Earliest entry date for a full year stay',
     fullYearNote: 'Entering from this date allows 365 consecutive days without violating Condition 8558',
+    fullYearVisaExpired: '⚠️ This date is beyond your visa last arrival date. Visa renewal or a new visa is required to enter',
   }
 };
 

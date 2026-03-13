@@ -233,6 +233,23 @@ describe('findEarliestFullYearDate', () => {
     assert.ok(totalInWindow <= 365, `window total ${totalInWindow} should be <= 365`);
   });
 
+  it('returns date beyond visa expiry when history is heavy', () => {
+    // Historical: stayed Jan 1 to Jul 1, 2025 (181 days)
+    // Current stay: Jul 2 to Jan 1, 2026 (184 days), pushed as history
+    const trips = [
+      { entry: d(2025, 1, 1), exit: d(2025, 7, 1) },
+      { entry: d(2025, 7, 2), exit: d(2026, 1, 2) },
+    ];
+    const searchStart = d(2026, 1, 2);
+    const visaLastArrival = d(2026, 6, 1);
+    const result = findEarliestFullYearDate(trips, searchStart);
+
+    assert.ok(result !== null, 'should find a date');
+    // The result should be after the visa last arrival date
+    assert.ok(result > visaLastArrival,
+      `earliest full year date ${result.toISOString()} should be after visa expiry ${visaLastArrival.toISOString()}`);
+  });
+
   it('finds correct date with multiple historical trips', () => {
     const trips = [
       { entry: d(2024, 6, 1), exit: d(2024, 9, 1) },  // 92 days
