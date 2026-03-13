@@ -279,11 +279,12 @@ function calculate() {
   const fullYearEl = document.getElementById('fullYearInfo');
   const earliestFullYear = findEarliestFullYearDate(allTrips, addDays(lastValidDate, 1));
   if (earliestFullYear) {
+    const beyondVisa = earliestFullYear > lastArrivalDate;
     fullYearEl.innerHTML = `
       <div class="full-year-label">${t('fullYearLabel')}</div>
       <div class="full-year-date">${formatDateCN(earliestFullYear)}</div>
       <div class="full-year-date-sub">${formatDateEN(earliestFullYear)}</div>
-      <div class="full-year-note">${t('fullYearNote')}</div>
+      <div class="full-year-note">${beyondVisa ? t('fullYearVisaExpired') : t('fullYearNote')}</div>
     `;
     fullYearEl.style.display = 'block';
   } else {
