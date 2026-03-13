@@ -319,6 +319,41 @@
       color: #e8a0a0;
     }
 
+    .full-year-info {
+      margin-top: 16px;
+      padding: 16px;
+      background: rgba(52, 152, 219, 0.12);
+      border: 1px solid rgba(52, 152, 219, 0.25);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .full-year-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .full-year-date {
+      font-size: 22px;
+      font-weight: 700;
+      color: #5dade2;
+      margin-bottom: 2px;
+    }
+
+    .full-year-date-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 8px;
+    }
+
+    .full-year-note {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+    }
+
     .calendar-section {
       text-align: center;
     }
@@ -484,6 +519,8 @@
       <div class="result-divider"></div>
       <div class="result-details" id="resultDetails"></div>
       <div class="result-warning" id="resultWarning" style="display:none;"></div>
+
+      <div id="fullYearInfo" class="full-year-info" style="display:none;"></div>
 
       <div class="result-divider"></div>
       <div class="calendar-section" id="calendarSection">

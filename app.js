@@ -103,6 +103,48 @@ function countDaysInWindow(windowStart, windowEnd, trips, currentEntry, currentE
   return total;
 }
 
+/**
+ * 找到最早可以入境并住满 365 天的日期。
+ * 从 searchStart 开始逐日搜索，检查假设住满 365 天是否全程合规。
+ */
+function findEarliestFullYearDate(trips, searchStart) {
+  const FULL_STAY = 365;
+
+  // 如果没有历史行程，从 searchStart 即可住满
+  if (trips.length === 0) return cloneDate(searchStart);
+
+  // 搜索上限：最后一次历史离境 + 18 个月
+  let latestExit = searchStart;
+  for (const trip of trips) {
+    if (trip.exit > latestExit) latestExit = trip.exit;
+  }
+  const searchEnd = addDays(subtractMonths(latestExit, -18), FULL_STAY);
+
+  let candidate = cloneDate(searchStart);
+
+  while (candidate <= searchEnd) {
+    const stayEnd = addDays(candidate, FULL_STAY - 1);
+    let valid = true;
+
+    // 从最后一天往前检查（最后一天约束最紧，可以早期剪枝）
+    let x = cloneDate(stayEnd);
+    while (x >= candidate) {
+      const windowStart = subtractMonths(x, 18);
+      const totalInWindow = countDaysInWindow(windowStart, x, trips, candidate, x);
+      if (totalInWindow > FULL_STAY) {
+        valid = false;
+        break;
+      }
+      x = addDays(x, -1);
+    }
+
+    if (valid) return candidate;
+    candidate = addDays(candidate, 1);
+  }
+
+  return null;
+}
+
 function formatDateCN(date) {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, '0');
@@ -228,6 +270,24 @@ function calculate() {
     warningEl.style.display = 'block';
   } else {
     warningEl.style.display = 'none';
+  }
+
+  // 计算最早可住满一年的日期
+  const allTrips = trips.slice();
+  // 把本次停留也作为"历史"记录加入，计算下次入境
+  allTrips.push({ entry: currentEntry, exit: addDays(lastValidDate, 1) });
+  const fullYearEl = document.getElementById('fullYearInfo');
+  const earliestFullYear = findEarliestFullYearDate(allTrips, addDays(lastValidDate, 1));
+  if (earliestFullYear) {
+    fullYearEl.innerHTML = `
+      <div class="full-year-label">${t('fullYearLabel')}</div>
+      <div class="full-year-date">${formatDateCN(earliestFullYear)}</div>
+      <div class="full-year-date-sub">${formatDateEN(earliestFullYear)}</div>
+      <div class="full-year-note">${t('fullYearNote')}</div>
+    `;
+    fullYearEl.style.display = 'block';
+  } else {
+    fullYearEl.style.display = 'none';
   }
 
   // 保存最终日期供日历功能使用
