@@ -280,12 +280,19 @@ function calculate() {
   const earliestFullYear = findEarliestFullYearDate(allTrips, addDays(lastValidDate, 1));
   if (earliestFullYear) {
     const beyondVisa = earliestFullYear > lastArrivalDate;
-    fullYearEl.innerHTML = `
-      <div class="full-year-label">${t('fullYearLabel')}</div>
-      <div class="full-year-date">${formatDateCN(earliestFullYear)}</div>
-      <div class="full-year-date-sub">${formatDateEN(earliestFullYear)}</div>
-      <div class="full-year-note">${beyondVisa ? t('fullYearVisaExpired') : t('fullYearNote')}</div>
-    `;
+    if (beyondVisa) {
+      fullYearEl.innerHTML = `
+        <div class="full-year-label">${t('fullYearLabel')}</div>
+        <div class="full-year-note">${t('fullYearVisaExpired')}</div>
+      `;
+    } else {
+      fullYearEl.innerHTML = `
+        <div class="full-year-label">${t('fullYearLabel')}</div>
+        <div class="full-year-date">${formatDateCN(earliestFullYear)}</div>
+        <div class="full-year-date-sub">${formatDateEN(earliestFullYear)}</div>
+        <div class="full-year-note">${t('fullYearNote')}</div>
+      `;
+    }
     fullYearEl.style.display = 'block';
   } else {
     fullYearEl.style.display = 'none';
@@ -327,6 +334,52 @@ function addToGoogleCalendar() {
 
   const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${desc}&dates=${dateStr}/${nextDay}`;
   window.open(url, '_blank');
+}
+
+/**
+ * 从 URL 参数自动填充表单并触发计算。
+ * 参数格式:
+ *   ?lastArrival=2027-07-01
+ *   &currentEntry=2027-03-29
+ *   &trips=2024-10-15,2025-01-12;2025-04-13,2025-09-21
+ *   &lang=zh
+ *   &auto=1        （自动计算）
+ */
+function loadFromURLParams() {
+  const params = new URLSearchParams(window.location.search);
+
+  const lang = params.get('lang');
+  if (lang) setLang(lang);
+
+  const lastArrival = params.get('lastArrival');
+  if (lastArrival) {
+    document.getElementById('visaLastArrivalDate').value = lastArrival;
+  }
+
+  const tripsStr = params.get('trips');
+  if (tripsStr) {
+    const tripPairs = tripsStr.split(';');
+    for (const pair of tripPairs) {
+      const [entry, exit] = pair.split(',');
+      if (entry && exit) {
+        addTrip();
+        const items = document.querySelectorAll('.trip-item');
+        const lastItem = items[items.length - 1];
+        lastItem.querySelector('.trip-entry').value = entry.trim();
+        lastItem.querySelector('.trip-exit').value = exit.trim();
+        updateTripDays(lastItem.querySelector('.trip-entry'));
+      }
+    }
+  }
+
+  const currentEntry = params.get('currentEntry');
+  if (currentEntry) {
+    document.getElementById('currentEntryDate').value = currentEntry;
+  }
+
+  if (params.get('auto') === '1' && lastArrival && currentEntry) {
+    setTimeout(() => calculate(), 100);
+  }
 }
 
 function addToAppleCalendar() {
