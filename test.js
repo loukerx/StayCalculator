@@ -277,6 +277,54 @@ describe('findEarliestFullYearDate', () => {
   });
 });
 
+// ==================== latest stay date ====================
+describe('latest stay date calculation', () => {
+  it('treats the shown last valid date as an included stay day', () => {
+    const trips = [
+      { entry: d(2024, 10, 15), exit: d(2025, 1, 12) },  // 90 days
+      { entry: d(2025, 4, 13), exit: d(2025, 9, 21) },   // 162 days
+    ];
+    const currentEntry = d(2026, 3, 6);
+    const maxStayDays = 365;
+
+    let dCursor = cloneDate(currentEntry);
+    let lastValidDate = null;
+
+    while (true) {
+      const windowStart = subtractMonths(dCursor, 18);
+      const totalInWindow = countDaysInWindow(windowStart, dCursor, trips, currentEntry, dCursor);
+
+      if (totalInWindow > maxStayDays) {
+        lastValidDate = addDays(dCursor, -1);
+        break;
+      }
+
+      dCursor = addDays(dCursor, 1);
+    }
+
+    assert.deepEqual(lastValidDate, d(2026, 9, 24));
+
+    const totalOnLastValidDay = countDaysInWindow(
+      subtractMonths(lastValidDate, 18),
+      lastValidDate,
+      trips,
+      currentEntry,
+      lastValidDate,
+    );
+    assert.equal(totalOnLastValidDay, 365);
+
+    const firstInvalidDay = addDays(lastValidDate, 1);
+    const totalOnFirstInvalidDay = countDaysInWindow(
+      subtractMonths(firstInvalidDay, 18),
+      firstInvalidDay,
+      trips,
+      currentEntry,
+      firstInvalidDay,
+    );
+    assert.equal(totalOnFirstInvalidDay, 366);
+  });
+});
+
 // ==================== formatDateCN ====================
 describe('formatDateCN', () => {
   it('formats date in Chinese style', () => {

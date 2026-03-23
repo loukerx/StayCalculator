@@ -16,9 +16,8 @@ PORT=8558
 # 检查端口是否已被占用，如果是则先关闭
 lsof -ti:$PORT >/dev/null 2>&1 && kill $(lsof -ti:$PORT) 2>/dev/null
 
-# 启动 HTTP 服务器（后台运行）
-cd "$PROJECT_DIR"
-python3 -m http.server $PORT &>/dev/null &
+# 启动禁用缓存的 HTTP 服务器（后台运行）
+python3 "$SCRIPT_DIR/no_cache_server.py" "$PORT" "$PROJECT_DIR" &>/dev/null &
 SERVER_PID=$!
 
 # 等待服务器启动
@@ -29,6 +28,7 @@ PARAMS+="&trips=2024-10-15,2025-01-12;2025-04-13,2025-09-21;2026-03-06,2026-09-2
 PARAMS+="&currentEntry=2027-03-29"
 PARAMS+="&lang=zh"
 PARAMS+="&auto=1"
+PARAMS+="&cb=$(date +%s)"
 
 open "http://localhost:$PORT/index.html?$PARAMS"
 
