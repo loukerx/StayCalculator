@@ -6,7 +6,7 @@ const TRANSLATIONS = {
 
     // 规则说明
     ruleTitle: 'Condition 8558',
-    ruleText: '澳大利亚签证持有者在任意连续 18 个月内，累计在澳停留时间不得超过 12 个月（365 天）。该规则采用滚动窗口计算，即从任一天往回推 18 个月，这段时间内的总停留天数都不能超过 365 天。',
+    ruleText: '澳大利亚签证持有者在任意连续 18 个月内，累计在澳停留时间不得超过 12 个月（365 天）。该规则采用滚动窗口计算，即从任一天往回推 18 个月，这段时间内的总停留天数都不能超过 365 天。计算停留天数时，入境日和离境日都计入。',
 
     // 签证信息
     visaInfo: '签证信息',
@@ -57,7 +57,7 @@ const TRANSLATIONS = {
     subtitle: '計算本次入境最晚可停留至哪一天',
 
     ruleTitle: 'Condition 8558',
-    ruleText: '澳洲簽證持有者在任意連續 18 個月內，累計在澳停留時間不得超過 12 個月（365 天）。該規則採用滾動窗口計算，即從任一天往回推 18 個月，這段時間內的總停留天數都不能超過 365 天。',
+    ruleText: '澳洲簽證持有者在任意連續 18 個月內，累計在澳停留時間不得超過 12 個月（365 天）。該規則採用滾動窗口計算，即從任一天往回推 18 個月，這段時間內的總停留天數都不能超過 365 天。計算停留天數時，入境日和離境日都計入。',
 
     visaInfo: '簽證資訊',
     lastArrivalLabel: '簽證最晚入境日期（Must not arrive after）',
@@ -102,7 +102,7 @@ const TRANSLATIONS = {
     subtitle: '今回の入国で最長いつまで滞在できるかを計算します',
 
     ruleTitle: 'Condition 8558',
-    ruleText: 'オーストラリアのビザ保持者は、連続する18ヶ月間のうち、オーストラリアでの滞在日数が12ヶ月（365日）を超えてはなりません。この規則はスライディングウィンドウ方式で計算されます。任意の日から18ヶ月遡り、その期間内の合計滞在日数が365日を超えないようにする必要があります。',
+    ruleText: 'オーストラリアのビザ保持者は、連続する18ヶ月間のうち、オーストラリアでの滞在日数が12ヶ月（365日）を超えてはなりません。この規則はスライディングウィンドウ方式で計算されます。任意の日から18ヶ月遡り、その期間内の合計滞在日数が365日を超えないようにする必要があります。滞在日数の計算では、入国日と出国日の両方を含みます。',
 
     visaInfo: 'ビザ情報',
     lastArrivalLabel: 'ビザ最終入国期限（Must not arrive after）',
@@ -146,7 +146,7 @@ const TRANSLATIONS = {
     pageTitle: 'ऑस्ट्रेलिया वीज़ा ठहरने की अवधि कैलकुलेटर',
     subtitle: 'इस प्रवेश पर आप अधिकतम कब तक रह सकते हैं, यह गणना करें',
     ruleTitle: 'Condition 8558',
-    ruleText: 'ऑस्ट्रेलियाई वीज़ा धारकों को किसी भी लगातार 18 महीने की अवधि में 12 महीने (365 दिन) से अधिक ऑस्ट्रेलिया में नहीं रहना चाहिए। इसकी गणना स्लाइडिंग विंडो पद्धति से की जाती है — किसी भी दिन से 18 महीने पीछे देखने पर, ऑस्ट्रेलिया में बिताए गए कुल दिन 365 से अधिक नहीं होने चाहिए।',
+    ruleText: 'ऑस्ट्रेलियाई वीज़ा धारकों को किसी भी लगातार 18 महीने की अवधि में 12 महीने (365 दिन) से अधिक ऑस्ट्रेलिया में नहीं रहना चाहिए। इसकी गणना स्लाइडिंग विंडो पद्धति से की जाती है — किसी भी दिन से 18 महीने पीछे देखने पर, ऑस्ट्रेलिया में बिताए गए कुल दिन 365 से अधिक नहीं होने चाहिए। ठहरने के दिनों की गणना में प्रवेश और प्रस्थान, दोनों दिन शामिल होते हैं।',
     visaInfo: 'वीज़ा जानकारी',
     lastArrivalLabel: 'वीज़ा अंतिम प्रवेश तिथि (Must not arrive after)',
     tripHistory: 'पिछला यात्रा इतिहास',
@@ -184,7 +184,7 @@ const TRANSLATIONS = {
     pageTitle: 'Kalkulator Masa Tinggal Visa Australia',
     subtitle: 'Hitung tanggal terakhir Anda dapat tinggal untuk kedatangan ini',
     ruleTitle: 'Condition 8558',
-    ruleText: 'Pemegang visa Australia tidak boleh tinggal di Australia lebih dari 12 bulan (365 hari) dalam periode 18 bulan berturut-turut. Perhitungan ini menggunakan metode sliding window — dari hari mana pun, melihat 18 bulan ke belakang, total hari tinggal di Australia tidak boleh melebihi 365 hari.',
+    ruleText: 'Pemegang visa Australia tidak boleh tinggal di Australia lebih dari 12 bulan (365 hari) dalam periode 18 bulan berturut-turut. Perhitungan ini menggunakan metode sliding window — dari hari mana pun, melihat 18 bulan ke belakang, total hari tinggal di Australia tidak boleh melebihi 365 hari. Dalam perhitungan hari tinggal, hari kedatangan dan hari keberangkatan sama-sama dihitung.',
     visaInfo: 'Informasi Visa',
     lastArrivalLabel: 'Tanggal kedatangan terakhir visa (Must not arrive after)',
     tripHistory: 'Riwayat Perjalanan',
@@ -222,7 +222,7 @@ const TRANSLATIONS = {
     pageTitle: 'Công cụ tính thời gian lưu trú Visa Úc',
     subtitle: 'Tính ngày cuối cùng bạn có thể ở lại cho lần nhập cảnh này',
     ruleTitle: 'Condition 8558',
-    ruleText: 'Người sở hữu visa Úc không được ở lại Úc quá 12 tháng (365 ngày) trong bất kỳ giai đoạn 18 tháng liên tục nào. Quy tắc này được tính bằng phương pháp cửa sổ trượt — nhìn lại 18 tháng từ bất kỳ ngày nào, tổng số ngày ở Úc không được vượt quá 365 ngày.',
+    ruleText: 'Người sở hữu visa Úc không được ở lại Úc quá 12 tháng (365 ngày) trong bất kỳ giai đoạn 18 tháng liên tục nào. Quy tắc này được tính bằng phương pháp cửa sổ trượt — nhìn lại 18 tháng từ bất kỳ ngày nào, tổng số ngày ở Úc không được vượt quá 365 ngày. Khi tính số ngày lưu trú, cả ngày nhập cảnh và ngày xuất cảnh đều được tính.',
     visaInfo: 'Thông tin Visa',
     lastArrivalLabel: 'Ngày nhập cảnh cuối cùng của visa (Must not arrive after)',
     tripHistory: 'Lịch sử xuất nhập cảnh',
@@ -260,7 +260,7 @@ const TRANSLATIONS = {
     pageTitle: 'Kalkulator ng Pananatili sa Visa ng Australia',
     subtitle: 'Kalkulahin ang pinakamahuli na petsa na maaari kang manatili para sa pagpasok na ito',
     ruleTitle: 'Condition 8558',
-    ruleText: 'Ang mga may hawak ng visa sa Australia ay hindi dapat manatili sa Australia nang higit sa 12 buwan (365 araw) sa anumang tuloy-tuloy na 18 buwang panahon. Kinakalkula ito gamit ang sliding window — mula sa anumang araw, kung titingnan ang 18 buwan pabalik, ang kabuuang araw na nasa Australia ay hindi dapat lumampas sa 365 araw.',
+    ruleText: 'Ang mga may hawak ng visa sa Australia ay hindi dapat manatili sa Australia nang higit sa 12 buwan (365 araw) sa anumang tuloy-tuloy na 18 buwang panahon. Kinakalkula ito gamit ang sliding window — mula sa anumang araw, kung titingnan ang 18 buwan pabalik, ang kabuuang araw na nasa Australia ay hindi dapat lumampas sa 365 araw. Sa pagbilang ng mga araw ng pananatili, kasama ang araw ng pagpasok at araw ng pag-alis.',
     visaInfo: 'Impormasyon ng Visa',
     lastArrivalLabel: 'Huling petsa ng pagdating ng visa (Must not arrive after)',
     tripHistory: 'Kasaysayan ng Paglalakbay',
@@ -298,7 +298,7 @@ const TRANSLATIONS = {
     pageTitle: 'เครื่องคำนวณระยะเวลาพำนักวีซ่าออสเตรเลีย',
     subtitle: 'คำนวณวันสุดท้ายที่สามารถพำนักได้สำหรับการเข้าประเทศครั้งนี้',
     ruleTitle: 'Condition 8558',
-    ruleText: 'ผู้ถือวีซ่าออสเตรเลียต้องไม่พำนักในออสเตรเลียเกิน 12 เดือน (365 วัน) ในช่วงเวลา 18 เดือนต่อเนื่องใดๆ กฎนี้คำนวณโดยใช้วิธี sliding window — จากวันใดก็ตาม ย้อนหลังไป 18 เดือน จำนวนวันที่อยู่ในออสเตรเลียทั้งหมดต้องไม่เกิน 365 วัน',
+    ruleText: 'ผู้ถือวีซ่าออสเตรเลียต้องไม่พำนักในออสเตรเลียเกิน 12 เดือน (365 วัน) ในช่วงเวลา 18 เดือนต่อเนื่องใดๆ กฎนี้คำนวณโดยใช้วิธี sliding window — จากวันใดก็ตาม ย้อนหลังไป 18 เดือน จำนวนวันที่อยู่ในออสเตรเลียทั้งหมดต้องไม่เกิน 365 วัน โดยในการคำนวณวันพำนัก จะนับทั้งวันเข้าประเทศและวันออกจากประเทศ',
     visaInfo: 'ข้อมูลวีซ่า',
     lastArrivalLabel: 'วันที่เข้าประเทศครั้งสุดท้ายของวีซ่า (Must not arrive after)',
     tripHistory: 'ประวัติการเดินทาง',
@@ -336,7 +336,7 @@ const TRANSLATIONS = {
     pageTitle: '호주 비자 체류 기간 계산기',
     subtitle: '이번 입국에서 최대 체류 가능 날짜를 계산합니다',
     ruleTitle: 'Condition 8558',
-    ruleText: '호주 비자 소지자는 연속되는 18개월 중 12개월(365일)을 초과하여 호주에 체류할 수 없습니다. 이 규칙은 슬라이딩 윈도우 방식으로 계산됩니다 — 임의의 날로부터 18개월을 거슬러 올라가, 해당 기간 내 호주 체류 총 일수가 365일을 초과하지 않아야 합니다.',
+    ruleText: '호주 비자 소지자는 연속되는 18개월 중 12개월(365일)을 초과하여 호주에 체류할 수 없습니다. 이 규칙은 슬라이딩 윈도우 방식으로 계산됩니다 — 임의의 날로부터 18개월을 거슬러 올라가, 해당 기간 내 호주 체류 총 일수가 365일을 초과하지 않아야 합니다. 체류 일수 계산에는 입국일과 출국일이 모두 포함됩니다.',
     visaInfo: '비자 정보',
     lastArrivalLabel: '비자 최종 입국 기한 (Must not arrive after)',
     tripHistory: '과거 출입국 기록',
@@ -375,7 +375,7 @@ const TRANSLATIONS = {
     subtitle: 'Calculate the latest date you can stay for this entry',
 
     ruleTitle: 'Condition 8558',
-    ruleText: 'Australian visa holders must not stay in Australia for more than 12 months (365 days) in any rolling 18-month period. This is calculated using a sliding window — looking back 18 months from any given day, the total days spent in Australia must not exceed 365.',
+    ruleText: 'Australian visa holders must not stay in Australia for more than 12 months (365 days) in any rolling 18-month period. This is calculated using a sliding window — looking back 18 months from any given day, the total days spent in Australia must not exceed 365. Both the arrival day and the departure day are counted as days in Australia.',
 
     visaInfo: 'Visa Information',
     lastArrivalLabel: 'Must not arrive after',
