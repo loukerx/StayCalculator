@@ -151,20 +151,27 @@ describe('countDaysInWindow', () => {
   it('counts a historical trip fully inside window', () => {
     const ws = d(2025, 1, 1);
     const we = d(2025, 12, 31);
-    const trips = [{ entry: d(2025, 3, 1), exit: d(2025, 3, 11) }]; // 10 days [entry, exit)
+    const trips = [{ entry: d(2025, 3, 1), exit: d(2025, 3, 11) }]; // 11 days [entry, exit]
     const total = countDaysInWindow(ws, we, trips, d(2026, 1, 1), d(2025, 12, 31));
-    assert.equal(total, 10);
+    assert.equal(total, 11);
   });
 
   it('clips historical trip to window boundaries', () => {
     const ws = d(2025, 3, 5);
     const we = d(2025, 3, 8);
-    // Trip: Mar 1 to Mar 11 (10 days), but window only covers Mar 5-8
+    // Trip: Mar 1 to Mar 11 (11 days), but window only covers Mar 5-8
     const trips = [{ entry: d(2025, 3, 1), exit: d(2025, 3, 11) }];
     const total = countDaysInWindow(ws, we, trips, d(2026, 1, 1), d(2025, 12, 31));
-    // Overlap: Mar 5 to Mar 8 (inclusive window end +1 for excl = Mar 9, but exit is Mar 11)
-    // overlapStart = Mar 5, overlapEnd = min(Mar 11, Mar 9) = Mar 9, days = 4
+    // Overlap: Mar 5 to Mar 8 inclusive = 4 days
     assert.equal(total, 4);
+  });
+
+  it('counts a same-day historical entry and exit as 1 day', () => {
+    const ws = d(2025, 3, 1);
+    const we = d(2025, 3, 31);
+    const trips = [{ entry: d(2025, 3, 10), exit: d(2025, 3, 10) }];
+    const total = countDaysInWindow(ws, we, trips, d(2026, 1, 1), d(2025, 12, 31));
+    assert.equal(total, 1);
   });
 
   it('counts current stay (inclusive both ends)', () => {
@@ -180,11 +187,11 @@ describe('countDaysInWindow', () => {
   it('counts both historical and current trips', () => {
     const ws = d(2025, 1, 1);
     const we = d(2025, 12, 31);
-    const trips = [{ entry: d(2025, 2, 1), exit: d(2025, 2, 11) }]; // 10 days
+    const trips = [{ entry: d(2025, 2, 1), exit: d(2025, 2, 11) }]; // 11 days
     const currentEntry = d(2025, 6, 1);
     const currentEndDay = d(2025, 6, 10); // 10 days
     const total = countDaysInWindow(ws, we, trips, currentEntry, currentEndDay);
-    assert.equal(total, 20);
+    assert.equal(total, 21);
   });
 
   it('handles trip completely outside window', () => {
@@ -199,11 +206,11 @@ describe('countDaysInWindow', () => {
     const ws = d(2025, 1, 1);
     const we = d(2025, 12, 31);
     const trips = [
-      { entry: d(2025, 2, 1), exit: d(2025, 2, 11) },  // 10 days
-      { entry: d(2025, 5, 1), exit: d(2025, 5, 21) },  // 20 days
+      { entry: d(2025, 2, 1), exit: d(2025, 2, 11) },  // 11 days
+      { entry: d(2025, 5, 1), exit: d(2025, 5, 21) },  // 21 days
     ];
     const total = countDaysInWindow(ws, we, trips, d(2026, 1, 1), d(2025, 12, 31));
-    assert.equal(total, 30);
+    assert.equal(total, 32);
   });
 });
 
@@ -216,7 +223,7 @@ describe('findEarliestFullYearDate', () => {
   });
 
   it('finds correct date with one historical trip', () => {
-    // Historical: stayed Jan 1 to Jul 1, 2025 (181 days, exit = Jul 1 exclusive)
+    // Historical: stayed Jan 1 to Jul 1, 2025 (182 days, departure day included)
     const trips = [{ entry: d(2025, 1, 1), exit: d(2025, 7, 1) }];
     const searchStart = d(2025, 7, 2);
     const result = findEarliestFullYearDate(trips, searchStart);
@@ -234,11 +241,11 @@ describe('findEarliestFullYearDate', () => {
   });
 
   it('returns date beyond visa expiry when history is heavy', () => {
-    // Historical: stayed Jan 1 to Jul 1, 2025 (181 days)
-    // Current stay: Jul 2 to Jan 1, 2026 (184 days), pushed as history
+    // Historical: stayed Jan 1 to Jul 1, 2025 (182 days)
+    // Current stay: Jul 2, 2025 to Jan 1, 2026 (184 days), pushed as history
     const trips = [
       { entry: d(2025, 1, 1), exit: d(2025, 7, 1) },
-      { entry: d(2025, 7, 2), exit: d(2026, 1, 2) },
+      { entry: d(2025, 7, 2), exit: d(2026, 1, 1) },
     ];
     const searchStart = d(2026, 1, 2);
     const visaLastArrival = d(2026, 6, 1);
@@ -252,8 +259,8 @@ describe('findEarliestFullYearDate', () => {
 
   it('finds correct date with multiple historical trips', () => {
     const trips = [
-      { entry: d(2024, 6, 1), exit: d(2024, 9, 1) },  // 92 days
-      { entry: d(2025, 1, 1), exit: d(2025, 4, 1) },  // 90 days
+      { entry: d(2024, 6, 1), exit: d(2024, 9, 1) },  // 93 days
+      { entry: d(2025, 1, 1), exit: d(2025, 4, 1) },  // 91 days
     ];
     const searchStart = d(2025, 4, 2);
     const result = findEarliestFullYearDate(trips, searchStart);

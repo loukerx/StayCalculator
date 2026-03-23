@@ -36,7 +36,7 @@ function updateTripDays(input) {
   const exit = item.querySelector('.trip-exit').value;
   const daysSpan = item.querySelector('.trip-days');
   if (entry && exit) {
-    const days = daysBetween(parseLocalDate(entry), parseLocalDate(exit));
+    const days = inclusiveDaysBetween(parseLocalDate(entry), parseLocalDate(exit));
     daysSpan.textContent = days > 0 ? days + ' ' + t('days') : '';
   } else {
     daysSpan.textContent = '';
@@ -53,6 +53,10 @@ function parseLocalDate(str) {
 function daysBetween(d1, d2) {
   const ms = d2.getTime() - d1.getTime();
   return Math.round(ms / (1000 * 60 * 60 * 24));
+}
+
+function inclusiveDaysBetween(d1, d2) {
+  return daysBetween(d1, d2) + 1;
 }
 
 // 日期减去 N 个日历月，正确处理月末溢出
@@ -79,7 +83,7 @@ function addDays(d, n) {
 /**
  * 计算在 [windowStart, windowEnd] 窗口内，总共在澳洲待了多少天。
  *
- * - 历史行程: [entry, exit)，离境日不算。
+ * - 历史行程: [entry, exit]，入境日和离境日都算。
  * - 当前行程: [currentEntry, currentEndDay]，两端都算。
  */
 function countDaysInWindow(windowStart, windowEnd, trips, currentEntry, currentEndDay) {
@@ -87,17 +91,18 @@ function countDaysInWindow(windowStart, windowEnd, trips, currentEntry, currentE
 
   for (const trip of trips) {
     const overlapStart = trip.entry > windowStart ? trip.entry : windowStart;
-    const windowExclEnd = addDays(windowEnd, 1);
-    const overlapEnd = trip.exit < windowExclEnd ? trip.exit : windowExclEnd;
-    const overlap = daysBetween(overlapStart, overlapEnd);
-    if (overlap > 0) total += overlap;
+    const overlapEnd = trip.exit < windowEnd ? trip.exit : windowEnd;
+    if (overlapEnd >= overlapStart) {
+      total += inclusiveDaysBetween(overlapStart, overlapEnd);
+    }
   }
 
   if (currentEndDay >= currentEntry) {
     const overlapStart = currentEntry > windowStart ? currentEntry : windowStart;
     const overlapEnd = currentEndDay < windowEnd ? currentEndDay : windowEnd;
-    const overlap = daysBetween(overlapStart, overlapEnd) + 1;
-    if (overlap > 0) total += overlap;
+    if (overlapEnd >= overlapStart) {
+      total += inclusiveDaysBetween(overlapStart, overlapEnd);
+    }
   }
 
   return total;
@@ -196,10 +201,10 @@ function calculate() {
     }
     const entry = parseLocalDate(entryVal);
     const exit = parseLocalDate(exitVal);
-    if (exit <= entry) {
+    if (exit < entry) {
       return showError(t('errorExitBeforeEntry'));
     }
-    const days = daysBetween(entry, exit);
+    const days = inclusiveDaysBetween(entry, exit);
     totalHistoricalDays += days;
     trips.push({ entry, exit });
   }
@@ -235,7 +240,7 @@ function calculate() {
     return showError(t('errorNoStay'));
   }
 
-  const thisStayDays = daysBetween(currentEntry, lastValidDate) + 1;
+  const thisStayDays = inclusiveDaysBetween(currentEntry, lastValidDate);
 
   const finalWindowStart = subtractMonths(lastValidDate, 18);
   const totalUsedInWindow = countDaysInWindow(finalWindowStart, lastValidDate, trips, currentEntry, lastValidDate);
@@ -275,7 +280,7 @@ function calculate() {
   // 计算最早可住满一年的日期
   const allTrips = trips.slice();
   // 把本次停留也作为"历史"记录加入，计算下次入境
-  allTrips.push({ entry: currentEntry, exit: addDays(lastValidDate, 1) });
+  allTrips.push({ entry: currentEntry, exit: lastValidDate });
   const fullYearEl = document.getElementById('fullYearInfo');
   const earliestFullYear = findEarliestFullYearDate(allTrips, addDays(lastValidDate, 1));
   if (earliestFullYear) {
